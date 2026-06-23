@@ -1,0 +1,10 @@
+CREATE TABLE public.card (
+    id int4 GENERATED ALWAYS AS IDENTITY NOT NULL,
+    "name" varchar(255) NOT NULL,
+    rating int4 DEFAULT 0 NOT NULL,
+    likes int4 DEFAULT 0 NOT NULL,
+    "views" int4 DEFAULT 0 NOT NULL,
+    genre varchar(100) NOT NULL,
+    image_url varchar(500) NULL,
+    PRIMARY KEY (id)
+);

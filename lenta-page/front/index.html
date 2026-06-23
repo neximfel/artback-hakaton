@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtBack - Лучший сайт на свете</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <a class="nav__logo" href=""><img src="images/header/logo.svg" alt=""></a>
+            <ul>
+                <a class="nav__a active" href="">Лента</a>
+                <a class="nav__a" href="">Конкурс</a>
+                <a class="nav__a" href="">Форум</a>
+                <a class="nav__a" href="">О нас</a>
+            </ul>
+            <div class="nav__search">
+                <button><img src="images/header/search.png" alt=""></button>
+                <input type="text" placeholder="Найти пользователя, пост, тему">
+            </div>
+            <div class="nav__profile">
+                <button id="upload-button"><img src="images/header/upload.png" alt=""></button>
+                <button id="profile-button"><img src="images/header/profile.png" alt=""></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="upload-modal" id="uploadModal">
+            <section class="upload-section">
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+                
+                <div class="center">
+                    <div class="upload" id="uploadArea">
+                        <img src="resource/Vector.svg" alt="Иконка картинки" class="upload-icon">
+                        <p>Загрузить свою работу</p>
+                        <img class="preview" id="preview" alt="Предпросмотр">
+                        <input type="file" class="upload-input" id="fileInput" accept="image/*">
+                    </div>
+                
+                    <div class="inputs_media">
+                        <div class="left">
+                            <input type="text" id="titleInput" placeholder="Название работы">
+                            <select id="categorySelect">
+                                <option value="" disabled selected>Выбрать категорию</option>
+                                <option value="drawing">Рисунок</option>
+                                <option value="photo">Фотография</option>
+                                <option value="design">Дизайн</option>
+                                <option value="other">Другое</option>
+                            </select>
+                            <button id="publishBtn">Опубликовать</button>
+                        </div>
+                        <textarea id="descriptionInput" placeholder="Описание..."></textarea>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="lenta">
+            <div class="lenta__header">
+                <h1>Лента работ</h1>
+                <div class="lenta__header-genres">
+                    <button class="active">Все</button>
+                    <button>Рисунки</button>
+                    <button>Фотографии</button>
+                    <button>Дизайн</button>
+                    <button>Другое</button>
+                </div>
+            </div>
+
+            <div id="lenta__arts"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="footer__top1">
+                <a href=""><img src="" alt=""></a>
+                <p class="footer__top1-text">ArtBack — платформа для художников...</p>
+            </div>
+            <div class="footer__top2">
+                <p class="footer__top2-title">Навигация</p>
+                <a href="">Лента</a>
+                <a href="">Конкурсы</a>
+                <a href="">Форум</a>
+                <a href="">О нас</a>
+            </div>
+            <div class="footer__top3">
+                <p class="footer__top3-title">Мы в соц. сетях:</p>
+                <a href="">
+                    <img src="" alt="">
+                    <p class="footer_top3-a-text">Группа VK</p>
+                </a>
+                <a href="">
+                    <img src="" alt="">
+                    <p class="footer_top3-a-text">Telegram</p>
+                </a>
+                <a href="">
+                    <img src="" alt="">
+                    <p class="footer_top3-a-text">YouTube</p>
+                </a>
+            </div>
+            <div class="footer__top4">
+                <p class="footer__top4-title">Связаться с нами:</p>
+                <a href="">Предлложка</a>
+                <a href="">Чат модерации</a>
+            </div>
+            <div class="footer__top5">
+                <p class="footer__top5-title">Правовая информация</p>
+                <a href="">Политика конфиденциальности</a>
+            </div>
+        </div>
+        <div class="footer__bot">
+            <p>Все права защищены</p>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+    <script src="req.js"></script>
+</body>
+</html>
