@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -331,208 +330,12 @@ main .lenta #lenta__arts .art-card:hover .art-card__delete {
   opacity: 1;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: "Segoe UI", Tahoma, sans-serif;
-  background: #f5f7fa;
-  padding: 40px 20px;
-  min-height: 100vh;
-}
-
-.center {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-/* ===== Область загрузки ===== */
-.upload {
-  border: 2px dashed #b0bec5;
-  border-radius: 12px;
-  padding: 60px 20px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: #fff;
-  margin-bottom: 20px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 250px;
-}
-
-.upload:hover,
-.upload.dragover {
-  border-color: #4a9b8e;
-  background: #f0f7f5;
-}
-
-.upload-icon {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 15px;
-  pointer-events: none;
-}
-
-.upload p {
-  font-size: 18px;
-  color: #333;
-  pointer-events: none;
-}
-
-/* Предпросмотр загруженной картинки */
-.preview {
-  max-width: 100%;
-  max-height: 220px;
-  border-radius: 8px;
-  display: none;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-
-/* Скрываем иконку и текст, когда есть превью */
-.upload.has-image .upload-icon,
-.upload.has-image p {
-  display: none;
-}
-
-.upload.has-image .preview {
-  display: block;
-}
-
-/* Скрытый input файла */
-.upload-input {
-  display: none;
-}
-
-/* ===== Блок с инпутами ===== */
-.inputs_media {
-  display: flex;
-  gap: 20px;
-  align-items: stretch;
-}
-
-.left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.left input,
-.left select {
-  padding: 14px 16px;
-  border: 1px solid #b0bec5;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.3s;
-  background: #fff;
-  color: #333;
-  font-family: inherit;
-}
-
-.left input::-moz-placeholder {
-  color: #999;
-}
-
-.left input::placeholder {
-  color: #999;
-}
-
-.left input:focus,
-.left select:focus {
-  border-color: #4a9b8e;
-}
-
-.left select {
-  cursor: pointer;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 15px center;
-  background-size: 16px;
-  padding-right: 40px;
-  color: #999;
-}
-
-.left select option {
-  color: #333;
-}
-
-.left button {
-  padding: 14px;
-  background: #4a9b8e;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background 0.3s;
-  font-family: inherit;
-  font-weight: 500;
-}
-
-.left button:hover {
-  background: #3d8277;
-}
-
-.left button:active {
-  transform: scale(0.98);
-}
-
-/* ===== Textarea ===== */
-textarea {
-  flex: 1;
-  padding: 14px 16px;
-  border: 1px solid #b0bec5;
-  border-radius: 8px;
-  font-size: 15px;
-  outline: none;
-  resize: none;
-  font-family: inherit;
-  transition: border-color 0.3s;
-  min-height: 200px;
-}
-
-textarea::-moz-placeholder {
-  color: #999;
-}
-
-textarea::placeholder {
-  color: #999;
-}
-
-textarea:focus {
-  border-color: #4a9b8e;
-}
-
-/* ===== Адаптив ===== */
-@media (max-width: 600px) {
-  .inputs_media {
-    flex-direction: column;
-  }
-  textarea {
-    min-height: 120px;
-  }
-}
 .upload-modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
   z-index: 1000;
   align-items: center;
   justify-content: center;
@@ -543,23 +346,213 @@ textarea:focus {
 
 .upload-section {
   position: relative;
-  background: #EFF7F6;
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 36px 32px 32px;
+  width: 560px;
+  max-width: 95vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 51, 47, 0.18);
 }
 
 .modal-close {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 32px;
-  color: #146660;
-  border: none;
-  cursor: pointer;
+  top: 16px;
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid #d0e8e6;
+  background: #f4faf9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
   line-height: 1;
-  width: auto;
-  height: auto;
-  transition: color 0.2s ease;
+  color: #3D9992;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .modal-close:hover {
-  color: #0b3d39;
+  background: #d9f0ee;
+  color: #146660;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.upload {
+  border: 2px dashed #9DCECA;
+  border-radius: 14px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s ease, background 0.25s ease;
+  background: #F6FDFB;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+}
+.upload:hover, .upload.dragover {
+  border-color: #3D9992;
+  background: #edf8f7;
+}
+
+.upload-icon {
+  width: 72px;
+  height: 72px;
+  margin-bottom: 12px;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.upload p {
+  font-size: 15px;
+  font-weight: 500;
+  color: #5a8a86;
+  pointer-events: none;
+}
+
+.preview {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 10px;
+  display: none;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.upload.has-image .upload-icon,
+.upload.has-image p {
+  display: none;
+}
+
+.upload.has-image .preview {
+  display: block;
+}
+
+.upload-input {
+  display: none;
+}
+
+.inputs_media {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.left input,
+.left select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #c8e2e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  background: #ffffff;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.left input::-moz-placeholder, .left select::-moz-placeholder {
+  color: #aac8c6;
+}
+.left input::placeholder,
+.left select::placeholder {
+  color: #aac8c6;
+}
+.left input:focus,
+.left select:focus {
+  border-color: #3D9992;
+}
+
+.left select {
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233D9992' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+  color: #aac8c6;
+}
+.left select:valid:not([value=""]) {
+  color: #333;
+}
+.left select option {
+  color: #333;
+}
+
+.left button {
+  padding: 13px 16px;
+  background: #3D9992;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  margin-top: auto;
+}
+.left button:hover {
+  background: #2e7a74;
+}
+.left button:active {
+  transform: scale(0.98);
+}
+
+textarea#descriptionInput {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1.5px solid #c8e2e0;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  background: #ffffff;
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s ease;
+  min-height: 140px;
+}
+textarea#descriptionInput::-moz-placeholder {
+  color: #aac8c6;
+}
+textarea#descriptionInput::placeholder {
+  color: #aac8c6;
+}
+textarea#descriptionInput:focus {
+  border-color: #3D9992;
+}
+
+@media (max-width: 560px) {
+  .upload-section {
+    padding: 28px 18px 22px;
+  }
+  .inputs_media {
+    flex-direction: column;
+  }
+  textarea#descriptionInput {
+    min-height: 110px;
+  }
 }/*# sourceMappingURL=style.css.map */
