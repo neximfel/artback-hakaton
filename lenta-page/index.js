@@ -44,12 +44,10 @@ app.get('/api/main', async (req, res) => {
 
 // 2. POST — Создание карточки с картинкой (принимает name, genre и файл image)
 app.post('/api/main', upload.single('image'), async (req, res) => {
-    // Достаем descr из тела запроса (req.body)
     const { name, genre, descr } = req.body
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null
 
     try {
-        // Добавляем "descr" и четвертый параметр $4 в SQL-запрос
         const result = await pool.query(
             'INSERT INTO public.card ("name", genre, image_url, "descr") VALUES ($1, $2, $3, $4) RETURNING *',
             [name, genre, imageUrl, descr]
@@ -67,6 +65,23 @@ app.delete('/api/main/:id', async (req, res) => {
         await pool.query('DELETE FROM public.card WHERE id = $1', [id])
         res.json({ message: 'Удалено' })
     } catch (error){
+        res.status(500).json({ error: `Server error: ${error.message}` })
+    }
+})
+
+// 4. POST — Лайк карточки: увеличивает likes на 1 и возвращает новое значение
+app.post('/api/main/:id/like', async (req, res) => {
+    const { id } = req.params
+    try {
+        const result = await pool.query(
+            'UPDATE public.card SET likes = likes + 1 WHERE id = $1 RETURNING likes',
+            [id]
+        )
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Карточка не найдена' })
+        }
+        res.json({ likes: result.rows[0].likes })
+    } catch (error) {
         res.status(500).json({ error: `Server error: ${error.message}` })
     }
 })
