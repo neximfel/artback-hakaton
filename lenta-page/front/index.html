@@ -13,7 +13,6 @@
             <ul>
                 <a class="nav__a active" href="">Лента</a>
                 <a class="nav__a" href="">Конкурс</a>
-                <a class="nav__a" href="">Форум</a>
                 <a class="nav__a" href="">О нас</a>
             </ul>
             <div class="nav__search">
@@ -45,10 +44,11 @@
                             <input type="text" id="titleInput" placeholder="Название работы">
                             <select id="categorySelect">
                                 <option value="" disabled selected>Выбрать категорию</option>
-                                <option value="drawing">Рисунок</option>
+                                <option value="digital">Digital</option>
+                                <option value="traditional">Традиционный</option>
+                                <option value="3d">3D</option>
                                 <option value="photo">Фотография</option>
-                                <option value="design">Дизайн</option>
-                                <option value="other">Другое</option>
+                                <option value="illustration">Иллюстрации</option>
                             </select>
                             <button id="publishBtn">Опубликовать</button>
                         </div>
@@ -62,11 +62,12 @@
             <div class="lenta__header">
                 <h1>Лента работ</h1>
                 <div class="lenta__header-genres">
-                    <button class="active">Все</button>
-                    <button>Рисунки</button>
-                    <button>Фотографии</button>
-                    <button>Дизайн</button>
-                    <button>Другое</button>
+                    <button class="active" data-filter="all">Все</button>
+                    <button data-filter="digital">Digital</button>
+                    <button data-filter="traditional">Традиционный</button>
+                    <button data-filter="3d">3D</button>
+                    <button data-filter="photo">Фотография</button>
+                    <button data-filter="illustration">Иллюстрации</button>
                 </div>
             </div>
 

@@ -86,6 +86,23 @@ app.post('/api/main/:id/like', async (req, res) => {
     }
 })
 
+// 5. POST — Анлайк карточки: уменьшает likes на 1 (не ниже 0) и возвращает новое значение
+app.post('/api/main/:id/unlike', async (req, res) => {
+    const { id } = req.params
+    try {
+        const result = await pool.query(
+            'UPDATE public.card SET likes = GREATEST(likes - 1, 0) WHERE id = $1 RETURNING likes',
+            [id]
+        )
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: 'Карточка не найдена' })
+        }
+        res.json({ likes: result.rows[0].likes })
+    } catch (error) {
+        res.status(500).json({ error: `Server error: ${error.message}` })
+    }
+})
+
 app.listen(PORT,()=>{
     console.log(`Сервер запущен на ${PORT}`)
 })
