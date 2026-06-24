@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtBack — Работа</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="post.css">
+</head>
+<body>
+
+    <!-- ═══════════════ HEADER (общий) ═══════════════ -->
+    <header class="header">
+        <nav class="nav">
+            <a class="nav__logo" href="../index.html"><img src="../images/header/logo.svg" alt=""></a>
+            <ul>
+                <a class="nav__a active" href="../index.html">Лента</a>
+                <a class="nav__a" href="">Конкурс</a>
+                <a class="nav__a" href="">О нас</a>
+            </ul>
+            <div class="nav__search">
+                <button><img src="../images/header/search.png" alt=""></button>
+                <input type="text" placeholder="Найти пользователя, пост, тему">
+            </div>
+            <div class="nav__profile">
+                <button id="upload-button"><img src="../images/header/upload.png" alt=""></button>
+                <button id="profile-button"><img src="../images/header/profile.png" alt=""></button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ═══════════════ ЛАЙТБОКС ═══════════════ -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox__close" onclick="closeLightbox()">&times;</button>
+        <img class="lightbox__img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <!-- ═══════════════ MAIN ═══════════════ -->
+    <main class="post-main">
+
+        <button class="post__back" onclick="history.back()">&#8592; Назад</button>
+
+        <div class="post__loading" id="postLoading">Загрузка…</div>
+        <div class="post__error" id="postError" style="display:none">Работа не найдена.</div>
+
+        <div class="post__wrap" id="postWrap" style="display:none">
+
+            <!-- Изображение (клик → лайтбокс) -->
+            <div class="post__hero" id="postHero" onclick="openLightbox()">
+                <img id="postImage" src="" alt="" class="post__hero-img">
+            </div>
+
+            <!-- Информация -->
+            <section class="post__info">
+                <div class="post__info-top">
+                    <div class="post__info-left">
+                        <!-- Название + бейдж жанра -->
+                        <div class="post__title-row">
+                            <h1 class="post__title" id="postTitle"></h1>
+                            <span class="post__genre-badge" id="postGenreBadge"></span>
+                        </div>
+                        <div class="post__author">
+                            <div class="post__avatar"></div>
+                            <span class="post__author-name">Автор</span>
+                            <span class="post__tick">✔</span>
+                        </div>
+                        <p class="post__descr" id="postDescr"></p>
+                    </div>
+                    <div class="post__info-right">
+                        <div class="post__rating" id="postRating">0/10</div>
+                        <div class="post__meta">
+                            <button class="post__like-btn" id="postLikeBtn" onclick="toggleLike()">
+                                <span class="post__like-icon" id="postLikeIcon">♡</span>
+                                <span id="postLikesCount">0</span>
+                            </button>
+                            <span class="post__meta-dot">·</span>
+                            <span class="post__views">
+                                <span class="post__views-icon">◎</span>
+                                <span id="postViewsCount">0</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Слайдеры -->
+                <div class="post__sliders">
+                    <div class="post__sliders-group">
+                        <h3 class="post__sliders-title">Объективные параметры</h3>
+                        <div class="slider-row">
+                            <label>Техника</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="technique">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                        <div class="slider-row">
+                            <label>Композиция</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="composition">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                        <div class="slider-row">
+                            <label>Цвет</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="color">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                        <div class="slider-row">
+                            <label>Освещение</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="lighting">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                    </div>
+                    <div class="post__sliders-group">
+                        <h3 class="post__sliders-title">Субъективные параметры</h3>
+                        <div class="slider-row">
+                            <label>Атмосфера</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="atmosphere">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                        <div class="slider-row">
+                            <label>Оригинальность</label>
+                            <input type="range" min="0" max="10" value="5" class="post__slider" data-key="originality">
+                            <span class="slider-val">5/10</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Итог + донат -->
+                <div class="post__submit-row">
+                    <div class="post__submit-left">
+                        <div class="post__total">Итого: <span id="totalScore">5</span>/10</div>
+                        <div class="post__donate">
+                            <span>Донат</span>
+                            <input type="number" id="donateInput" placeholder="Введите сумму" min="0">
+                        </div>
+                        <button class="post__publish-btn" id="publishRatingBtn">Опубликовать</button>
+                    </div>
+                    <textarea class="post__comment-input" id="ratingCommentInput" placeholder="Комментари..."></textarea>
+                </div>
+
+                <!-- Список комментариев -->
+                <hr class="post__divider">
+                <div class="post__comments">
+                    <h2 class="post__comments-title">Комментарии:</h2>
+                    <div id="commentsList"></div>
+                    <div class="post__comments-empty" id="commentsEmpty" style="display:none">
+                        Комментариев пока нет. Будьте первым!
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- ═══════════════ FOOTER (общий) ═══════════════ -->
+    <footer class="footer">
+        <div class="footer__top">
+            <div class="footer__top1">
+                <a href="../index.html"><img src="" alt=""></a>
+                <p class="footer__top1-text">ArtBack — платформа для художников...</p>
+            </div>
+            <div class="footer__top2">
+                <p class="footer__top2-title">Навигация</p>
+                <a href="../index.html">Лента</a>
+                <a href="">Конкурсы</a>
+                <a href="">Форум</a>
+                <a href="">О нас</a>
+            </div>
+            <div class="footer__top3">
+                <p class="footer__top3-title">Мы в соц. сетях:</p>
+                <a href=""><img src="" alt=""><p class="footer_top3-a-text">Группа VK</p></a>
+                <a href=""><img src="" alt=""><p class="footer_top3-a-text">Telegram</p></a>
+                <a href=""><img src="" alt=""><p class="footer_top3-a-text">YouTube</p></a>
+            </div>
+            <div class="footer__top4">
+                <p class="footer__top4-title">Связаться с нами:</p>
+                <a href="">Предложка</a>
+                <a href="">Чат модерации</a>
+            </div>
+            <div class="footer__top5">
+                <p class="footer__top5-title">Правовая информация</p>
+                <a href="">Политика конфиденциальности</a>
+            </div>
+        </div>
+        <div class="footer__bot">
+            <p>Все права защищены</p>
+        </div>
+    </footer>
+
+    <script src="post.js"></script>
+</body>
+</html>

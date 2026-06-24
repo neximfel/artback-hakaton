@@ -1,12 +1,12 @@
 const MAX_DESCR_LENGTH = 90;
 const POSTS_PER_PAGE = 9;
 
-let allData      = [];
+let allData = [];
 let filteredData = [];
-let currentPage  = 1;
+let currentPage = 1;
+let currentFilter = 'all';
 
-// data-filter кнопки → точное значение genre в БД
-// В БД хранится .text из <option>, поэтому пишем то же самое
+// Маппинг data-filter → точный текст жанра в БД
 const GENRE_MAP = {
     all:          null,
     digital:      'Digital',
@@ -14,6 +14,15 @@ const GENRE_MAP = {
     '3d':         '3D',
     photo:        'Фотография',
     illustration: 'Иллюстрации',
+};
+
+// Цвета жанров для бейджа на карточке
+const GENRE_COLORS = {
+    'Фотография':   '#7DAA89',
+    'Digital':      '#7D86AA',
+    '3D':           '#C9AF78',
+    'Иллюстрации':  '#B092CA',
+    'Традиционный': '#8A5858',
 };
 
 const likedSet = new Set();
@@ -28,14 +37,18 @@ function truncate(text, max) {
 // ─── Фильтр ─────────────────────────────────────────────────
 
 function applyFilter(filter) {
-    const genre  = GENRE_MAP[filter];
+    currentFilter = filter;
+    currentPage   = 1;
+
+    const genre = GENRE_MAP[filter];
     filteredData = genre
         ? allData.filter(r => r.genre === genre)
         : [...allData];
+
     renderPage(1);
 }
 
-// Кнопки фильтра — вешаем сразу при загрузке DOM, не ждём fetch
+// Вешаем кнопки сразу при загрузке DOM
 document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.lenta__header-genres button');
     buttons.forEach(btn => {
@@ -64,9 +77,12 @@ function renderPage(page) {
     }
 
     lenta.innerHTML = pageData.map(row => {
+        // Ссылка на страницу поста
+        const postUrl = `post/post_index.html?id=${row.id}`;
+
         const imageBlock = row.image_url
-            ? `<a href=""><img src="http://localhost:3003${row.image_url}" alt="${row.name}" class="art-card__img"></a>`
-            : '';
+            ? `<a href="${postUrl}"><img src="http://localhost:3003${row.image_url}" alt="${row.name}" class="art-card__img"></a>`
+            : `<a href="${postUrl}" class="art-card__img-placeholder"></a>`;
 
         const isLiked    = likedSet.has(row.id);
         const likeIcon   = isLiked ? '♥' : '♡';
@@ -80,8 +96,8 @@ function renderPage(page) {
             </div>
             <div class="art-card__content">
                 <div class="art-card__header">
-                    <a href="" class="art-card__title">${row.name}</a>
-                    <span class="art-card__genre">${row.genre}</span>
+                    <a href="${postUrl}" class="art-card__title">${row.name}</a>
+                    <span class="art-card__genre" style="background-color:${GENRE_COLORS[row.genre] || '#C9A8A8'}">${row.genre}</span>
                 </div>
                 <div class="art-card__author-stats">
                     <a href="" class="art-card__author">
@@ -118,7 +134,10 @@ function renderPage(page) {
 
     renderPagination(Math.ceil(filteredData.length / POSTS_PER_PAGE));
 
-    document.querySelector('.lenta')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const lentaSection = document.querySelector('.lenta');
+    if (lentaSection) {
+        lentaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 // ─── Пагинация ──────────────────────────────────────────────
@@ -129,7 +148,7 @@ function renderPagination(totalPages) {
     if (totalPages <= 1) return;
 
     const container = document.createElement('div');
-    container.id        = 'pagination-container';
+    container.id    = 'pagination-container';
     container.className = 'pagination';
 
     const prevBtn = document.createElement('button');
@@ -158,7 +177,9 @@ function renderPagination(totalPages) {
     container.appendChild(nextBtn);
 
     const lenta = document.getElementById('lenta__arts');
-    if (lenta?.parentNode) lenta.parentNode.insertBefore(container, lenta.nextSibling);
+    if (lenta && lenta.parentNode) {
+        lenta.parentNode.insertBefore(container, lenta.nextSibling);
+    }
 }
 
 // ─── Загрузка данных ────────────────────────────────────────
@@ -213,8 +234,13 @@ function toggleLike(id) {
             const icon = btn.querySelector('.art-card__like-icon');
             if (icon) icon.textContent = likedSet.has(id) ? '♥' : '♡';
 
-            btn.classList.toggle('liked', likedSet.has(id));
-            btn.title = likedSet.has(id) ? 'Убрать лайк' : 'Поставить лайк';
+            if (likedSet.has(id)) {
+                btn.classList.add('liked');
+                btn.title = 'Убрать лайк';
+            } else {
+                btn.classList.remove('liked');
+                btn.title = 'Поставить лайк';
+            }
         })
         .catch(err => console.error('Ошибка при лайке:', err))
         .finally(() => { btn.dataset.pending = 'false'; });

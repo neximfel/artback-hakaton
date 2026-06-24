@@ -1,0 +1,543 @@
+/* ============================================================
+   POST PAGE — стили страницы отдельного поста
+   ============================================================ */
+
+/* ─── Общий лейаут страницы ─────────────────────────────── */
+.post-main {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+}
+
+.post__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 24px 0 20px;
+    padding: 8px 18px;
+    border-radius: 100px;
+    border: 1.5px solid #3D9992;
+    color: #3D9992;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: transparent;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.post__back:hover {
+    background: #3D9992;
+    color: #fff;
+}
+
+/* ─── Состояния загрузки / ошибки ───────────────────────── */
+.post__loading,
+.post__error {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 1.2rem;
+    color: #5a8a86;
+}
+
+.post__error { color: #c0392b; }
+
+/* ─── Обёртка поста ─────────────────────────────────────── */
+.post__wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ─── Главное изображение ───────────────────────────────── */
+.post__hero {
+    width: 100%;
+    border-radius: 18px 18px 0 0;
+    overflow: hidden;
+    background: #6B5B5B;
+    cursor: zoom-in;
+}
+
+.post__hero-img {
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.post__hero-img:hover {
+    opacity: 0.92;
+}
+
+/* ─── Лайтбокс ──────────────────────────────────────────── */
+.lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    backdrop-filter: blur(4px);
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox__img {
+    max-width: 92vw;
+    max-height: 92vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+    pointer-events: none;
+}
+
+.lightbox__close {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    pointer-events: all;
+}
+
+.lightbox__close:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ─── Блок информации ───────────────────────────────────── */
+.post__info {
+    background: #fff;
+    border: 1px solid #E8EDEA;
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    padding: 28px 32px 36px;
+    box-shadow: 0 4px 24px rgba(79, 105, 86, 0.08);
+}
+
+.post__info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.post__info-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* Строка: название + жанр-бейдж */
+.post__title-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.post__title {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #00332F;
+    line-height: 1.2;
+}
+
+.post__genre-badge {
+    flex-shrink: 0;
+    color: #fff;
+    padding: 5px 16px;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+}
+
+.post__author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #5A7361;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.post__avatar {
+    width: 30px;
+    height: 30px;
+    background: #8B6E6E;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.post__tick { color: #5A9B8F; font-size: 0.85rem; }
+
+.post__descr {
+    font-size: 0.95rem;
+    color: #4a6652;
+    line-height: 1.6;
+}
+
+/* Правая часть: рейтинг + лайки/просмотры */
+.post__info-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.post__rating {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #00332F;
+}
+
+.post__meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #F5F7F5;
+    border: 1px solid #E4EBE6;
+    padding: 6px 14px;
+    border-radius: 100px;
+    white-space: nowrap;
+}
+
+.post__like-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #5A7361;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.post__like-btn:hover { color: #c0392b; }
+.post__like-btn.liked .post__like-icon { color: #e74c3c; }
+
+.post__like-icon { font-size: 1.1rem; transition: color 0.2s; }
+
+.post__meta-dot { color: #b0c4b8; font-size: 1.1rem; }
+
+.post__views {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #5A7361;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+/* ─── Слайдеры ──────────────────────────────────────────── */
+.post__sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+.post__sliders-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post__sliders-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #3D9992;
+    margin-bottom: 4px;
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #E8EDEA;
+    padding-bottom: 10px;
+}
+
+.slider-row label {
+    min-width: 120px;
+    font-size: 0.95rem;
+    color: #3D4F44;
+    font-weight: 500;
+}
+
+.post__slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #d0e8e6;
+    border-radius: 100px;
+    outline: none;
+    cursor: pointer;
+}
+
+.post__slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3D9992;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #3D9992;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+
+.post__slider::-webkit-slider-thumb:hover {
+    background: #146660;
+    box-shadow: 0 0 0 2px #146660;
+}
+
+.post__slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3D9992;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #3D9992;
+    cursor: pointer;
+}
+
+.slider-val {
+    min-width: 42px;
+    text-align: right;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #3D9992;
+}
+
+/* ─── Строка «Итого + донат + кнопка» ── 35 / 65 ────────── */
+.post__submit-row {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 28px;
+}
+
+.post__submit-left {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.post__total {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #00332F;
+}
+
+.post__donate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    color: #5A7361;
+    font-weight: 600;
+}
+
+.post__donate input {
+    flex: 1;
+    min-width: 0;
+    padding: 7px 12px;
+    border: 1.5px solid #c8e2e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.post__donate input:focus { border-color: #3D9992; }
+.post__donate input::placeholder { color: #aac8c6; }
+
+.post__publish-btn {
+    padding: 12px 20px;
+    background: #3D9992;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    width: 100%;
+}
+
+.post__publish-btn:hover { background: #2e7a74; }
+.post__publish-btn:active { transform: scale(0.98); }
+
+.post__comment-input {
+    flex: 1;
+    padding: 14px 16px;
+    border: 1.5px solid #c8e2e0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: #333;
+    background: #fff;
+    outline: none;
+    resize: none;
+    min-height: 120px;
+    transition: border-color 0.2s;
+}
+
+.post__comment-input:focus { border-color: #3D9992; }
+.post__comment-input::placeholder { color: #aac8c6; }
+
+/* ─── Разделитель ───────────────────────────────────────── */
+.post__divider {
+    border: none;
+    border-top: 1px solid #E8EDEA;
+    margin: 0 0 24px;
+}
+
+/* ─── Комментарии ───────────────────────────────────────── */
+.post__comments-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #00332F;
+    margin-bottom: 18px;
+}
+
+.post__comments-empty {
+    color: #88a896;
+    font-size: 0.95rem;
+    padding: 12px 0;
+}
+
+/* Одна карточка комментария */
+.comment-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f4f2;
+}
+
+.comment-card:last-child { border-bottom: none; }
+
+.comment-card__avatar {
+    width: 34px;
+    height: 34px;
+    background: #8B6E6E;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.comment-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.comment-card__author-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.comment-card__author {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #3D4F44;
+}
+
+.comment-card__donate {
+    background: #FFD700;
+    color: #5a4200;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+}
+
+.comment-card__text {
+    font-size: 0.95rem;
+    color: #4a6652;
+    line-height: 1.5;
+}
+
+.comment-card__date {
+    font-size: 0.78rem;
+    color: #a0b8a8;
+}
+
+/* Рейтинг комментатора — справа */
+.comment-card__rating {
+    flex-shrink: 0;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #00332F;
+    white-space: nowrap;
+    align-self: center;
+    margin-left: auto;
+    padding-left: 16px;
+}
+
+/* ─── Адаптив ───────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .post__info-top {
+        flex-direction: column;
+    }
+
+    .post__info-right {
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .post__submit-row {
+        flex-direction: column;
+    }
+
+    .post__submit-left {
+        flex: unset;
+        width: 100%;
+    }
+
+    .slider-row label {
+        min-width: 100px;
+    }
+
+    .post__info {
+        padding: 20px 18px 28px;
+    }
+
+    .post__title {
+        font-size: 1.5rem;
+    }
+}
