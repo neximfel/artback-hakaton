@@ -1,27 +1,19 @@
 const MAX_DESCR_LENGTH = 90;
 const POSTS_PER_PAGE = 9;
 
-let allData = [];
+let allData      = [];
 let filteredData = [];
-let currentPage = 1;
-let currentFilter = 'all';
+let currentPage  = 1;
 
-// Маппинг data-filter → точный текст жанра в БД (берётся из .text опций select в script.js)
+// data-filter кнопки → точное значение genre в БД
+// В БД хранится .text из <option>, поэтому пишем то же самое
 const GENRE_MAP = {
-    all:     null,
-    drawing: 'Рисунок',
-    photo:   'Фотография',
-    design:  'Дизайн',
-    other:   'Другое',
-};
-
-// Цвета жанров для бейджа на карточке
-const GENRE_COLORS = {
-    'Фотография':   '#7DAA89',
-    'Digital':      '#7D86AA',
-    '3D':           '#C9AF78',
-    'Иллюстрации':  '#B092CA',
-    'Традиционный': '#8A5858',
+    all:          null,
+    digital:      'Digital',
+    traditional:  'Традиционный',
+    '3d':         '3D',
+    photo:        'Фотография',
+    illustration: 'Иллюстрации',
 };
 
 const likedSet = new Set();
@@ -36,26 +28,14 @@ function truncate(text, max) {
 // ─── Фильтр ─────────────────────────────────────────────────
 
 function applyFilter(filter) {
-    currentFilter = filter;
-    currentPage   = 1;
-
     const genre  = GENRE_MAP[filter];
-
-    // Диагностика — убери после проверки
-    if (allData.length) {
-        const uniqueGenres = [...new Set(allData.map(r => r.genre))];
-        console.log('[Filter] Жанры в БД:', uniqueGenres);
-        console.log('[Filter] Ищем:', genre, '| Найдено:', allData.filter(r => r.genre === genre).length);
-    }
-
     filteredData = genre
         ? allData.filter(r => r.genre === genre)
         : [...allData];
-
     renderPage(1);
 }
 
-// Вешаем кнопки сразу при загрузке DOM — не ждём fetch
+// Кнопки фильтра — вешаем сразу при загрузке DOM, не ждём fetch
 document.addEventListener('DOMContentLoaded', function () {
     const buttons = document.querySelectorAll('.lenta__header-genres button');
     buttons.forEach(btn => {
@@ -101,7 +81,7 @@ function renderPage(page) {
             <div class="art-card__content">
                 <div class="art-card__header">
                     <a href="" class="art-card__title">${row.name}</a>
-                    <span class="art-card__genre" style="background-color:${GENRE_COLORS[row.genre] || '#C9A8A8'}">${row.genre}</span>
+                    <span class="art-card__genre">${row.genre}</span>
                 </div>
                 <div class="art-card__author-stats">
                     <a href="" class="art-card__author">
@@ -138,10 +118,7 @@ function renderPage(page) {
 
     renderPagination(Math.ceil(filteredData.length / POSTS_PER_PAGE));
 
-    const lentaSection = document.querySelector('.lenta');
-    if (lentaSection) {
-        lentaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    document.querySelector('.lenta')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ─── Пагинация ──────────────────────────────────────────────
@@ -152,7 +129,7 @@ function renderPagination(totalPages) {
     if (totalPages <= 1) return;
 
     const container = document.createElement('div');
-    container.id    = 'pagination-container';
+    container.id        = 'pagination-container';
     container.className = 'pagination';
 
     const prevBtn = document.createElement('button');
@@ -181,9 +158,7 @@ function renderPagination(totalPages) {
     container.appendChild(nextBtn);
 
     const lenta = document.getElementById('lenta__arts');
-    if (lenta && lenta.parentNode) {
-        lenta.parentNode.insertBefore(container, lenta.nextSibling);
-    }
+    if (lenta?.parentNode) lenta.parentNode.insertBefore(container, lenta.nextSibling);
 }
 
 // ─── Загрузка данных ────────────────────────────────────────
@@ -238,13 +213,8 @@ function toggleLike(id) {
             const icon = btn.querySelector('.art-card__like-icon');
             if (icon) icon.textContent = likedSet.has(id) ? '♥' : '♡';
 
-            if (likedSet.has(id)) {
-                btn.classList.add('liked');
-                btn.title = 'Убрать лайк';
-            } else {
-                btn.classList.remove('liked');
-                btn.title = 'Поставить лайк';
-            }
+            btn.classList.toggle('liked', likedSet.has(id));
+            btn.title = likedSet.has(id) ? 'Убрать лайк' : 'Поставить лайк';
         })
         .catch(err => console.error('Ошибка при лайке:', err))
         .finally(() => { btn.dataset.pending = 'false'; });
