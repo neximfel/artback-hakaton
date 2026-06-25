@@ -75,45 +75,71 @@
     </main>
 
     <footer class="footer">
-        <div class="footer__top">
-            <div class="footer__top1">
-                <a href=""><img src="" alt=""></a>
-                <p class="footer__top1-text">ArtBack — платформа для художников...</p>
+        <div class="footer__inner">
+            <div class="footer__top">
+                <div class="footer__brand">
+                    <a class="footer__logo" href="">
+                        <img src="images/footer/logo.png" alt="">
+                    </a>
+                    <p class="footer__tagline">artback.support@gmail.com</p>
+                </div>
+                <nav class="footer__nav" aria-label="Навигация по сайту">
+                    <div class="footer__nav-group">
+                        <ul class="menu-btn-list">
+                            <li><button class="menu-btn">Лента</button></li>
+                            <li><button class="menu-btn">О нас</button></li>
+                            <li><button class="menu-btn">Конкурсы</button></li>
+                            <li><button class="menu-btn">Профиль</button></li>
+                        </ul>
+                    </div>
+                    <div class="footer__nav-group">
+                        <h3>Компания</h3>
+                        <ul>
+                            <li><a href="#">О нас</a></li>
+                            <li><a href="#">Вакансии</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer__nav-group">
+                        <h3>Поддержка</h3>
+                        <ul>
+                            <li><a href="#">Помощь</a></li>
+                            <li><a href="#">Чат с модерацией</a></li>
+                            <li><a href="#">Предложка</a></li>
+                            <li><a href="#">Связаться с нами</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="footer__newsletter">
+                    <h3>Рассылка</h3>
+                    <p>Уведомление о новых конкурсах</p>
+                    <form class="footer__form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Готово ✓';">
+                        <label for="footer-email" class="visually-hidden">Email</label>
+                        <input id="footer-email" type="email" placeholder="Ваш email" required>
+                        <button type="submit">Подписаться</button>
+                    </form>
+                    <p class="footer__form-note">Отписаться можно в любой момент.</p>
+                </div>
             </div>
-            <div class="footer__top2">
-                <p class="footer__top2-title">Навигация</p>
-                <a href="">Лента</a>
-                <a href="">Конкурсы</a>
-                <a href="">Форум</a>
-                <a href="">О нас</a>
+            <div class="footer__divider">
+                <div class="footer__bottom">
+                    <div class="footer__legal">
+                        <span>© 2026 Artback. Все права защищены.</span>
+                        <a href="#">Конфиденциальность</a>
+                        <a href="#">Условия использования</a>
+                    </div>
+                </div>
+                <div class="footer__social">
+                    <a href="" aria-label="Tg">
+                        <img src="images/footer/tg_logo.png" alt="">
+                    </a>
+                    <a href="" aria-label="Vk">
+                        <img src="images/footer/Vk_logo.png" alt="">
+                    </a>
+                    <a href="" aria-label="Boosty">
+                        <img src="images/footer/boosty_logo.png" alt="">
+                    </a>
+                </div>
             </div>
-            <div class="footer__top3">
-                <p class="footer__top3-title">Мы в соц. сетях:</p>
-                <a href="">
-                    <img src="" alt="">
-                    <p class="footer_top3-a-text">Группа VK</p>
-                </a>
-                <a href="">
-                    <img src="" alt="">
-                    <p class="footer_top3-a-text">Telegram</p>
-                </a>
-                <a href="">
-                    <img src="" alt="">
-                    <p class="footer_top3-a-text">YouTube</p>
-                </a>
-            </div>
-            <div class="footer__top4">
-                <p class="footer__top4-title">Связаться с нами:</p>
-                <a href="">Предлложка</a>
-                <a href="">Чат модерации</a>
-            </div>
-            <div class="footer__top5">
-                <p class="footer__top5-title">Правовая информация</p>
-                <a href="">Политика конфиденциальности</a>
-            </div>
-        </div>
-        <div class="footer__bot">
-            <p>Все права защищены</p>
         </div>
     </footer>
     <script src="script.js"></script>
